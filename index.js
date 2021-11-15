@@ -22,12 +22,18 @@ async function run() {
     await client.connect();
     const database = client.db("DroneBazar");
     const productsCollection = database.collection("products");
+    const reviewsCollection = database.collection("reviews");
     const ordersCollection = database.collection("orders");
     const newOrdersCollection = database.collection("newOrders");
 
     // GET API
     app.get("/products", async (req, res) => {
       const cursor = productsCollection.find({});
+      const services = await cursor.toArray();
+      res.send(services);
+    });
+    app.get("/reviews", async (req, res) => {
+      const cursor = reviewsCollection.find({});
       const services = await cursor.toArray();
       res.send(services);
     });
